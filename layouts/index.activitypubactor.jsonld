@@ -42,12 +42,12 @@
         {{- end -}}
       ]
     }
-  }
+  },
   "url": {
     "type": "Link",
     "mediatype": "text/html",
     "href": "{{ .Site.BaseURL }}"
-  }
+  },
   "webfinger": "{{ $username }}@{{ (urls.Parse .Site.BaseURL).Host }}",
   "cc": "as:Public"
 }
