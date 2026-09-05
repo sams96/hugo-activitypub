@@ -1,0 +1,44 @@
+{{ $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $actorID := printf "%sactor.jsonld" .Site.BaseURL -}}
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/fep/b06c"
+  ],
+  "id": "{{ $actorID }}",
+  "type": "{{ .Site.Params.activitypub.type | default "Organization" }}",
+  "name": {{ .Site.Title | jsonify }},
+  "summary": {{ .Site.Params.description | default .Site.Title | jsonify }},
+  "pollOnly": true,
+  "updateInterval": "{{ .Site.Params.activitypub.updateInterval | default "P1D" }}",
+  "inbox": "{{ .Site.BaseURL }}inbox.jsonld",
+  "outbox": {
+    "id": "{{ .Site.BaseURL }}outbox.jsonld",
+    "totalItems": {{ len $posts }},
+    "first": {
+      "id": "{{ .Site.BaseURL }}outbox/1.jsonld",
+      "orderedItems": [
+        {{- range $index, $page := $posts -}}
+          {{- if $index -}},{{- end -}}
+          {
+            "id": "{{ $page.Permalink }}#create",
+            "type": "Create",
+            "summary": {{ printf "%s created an article" $.Site.Title | jsonify }},
+            "actor": "{{ $actorID }}",
+            "to": "as:Public",
+            "published": "{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}",
+            "object": {
+              "id": "{{ $page.Permalink }}",
+              "type": "Article",
+              "name": {{ $page.Title | jsonify }},
+              "summary": {{ $page.Summary | jsonify }},
+              "url": "{{ $page.Permalink }}",
+              "attributedTo": "{{ $actorID }}",
+              "to": "as:Public"
+            }
+          }
+        {{- end -}}
+      ]
+    }
+  }
+}

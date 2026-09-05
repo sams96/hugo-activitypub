@@ -1,0 +1,15 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://w3id.org/fep/b06c"
+  ],
+  "id": "{{ .Permalink }}",
+  "type": "Article",
+  "name": {{ .Title | jsonify }},
+  "summary": {{ .Summary | jsonify }},
+  "content": {{ .Content | jsonify }},
+  "url": "{{ .Permalink }}",
+  "published": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "attributedTo": "{{ .Site.BaseURL }}actor.jsonld",
+  "to": ["https://www.w3.org/ns/activitystreams#Public"]
+}

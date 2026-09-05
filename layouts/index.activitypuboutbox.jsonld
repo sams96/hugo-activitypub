@@ -1,0 +1,21 @@
+{{ $items := slice }}
+{{ range where .Site.RegularPages "Type" "in" site.Params.mainSections }}
+  {{ with .OutputFormats.Get "ActivityPubNote" }}
+    {{ $items = $items | append .Permalink }}
+  {{ else }}
+    {{/* Fallback if the page hasn't generated the format */}}
+    {{ $items = $items | append (printf "%sindex.json" .Permalink) }}
+  {{ end }}
+{{ end }}
+
+{
+  "@context": ["https://www.w3.org/ns/activitystreams", "https://w3id.org/fep/5711"],
+  "id": "{{ .Site.BaseURL }}outbox.jsonld",
+  "type": "OrderedCollection",
+  "summary": "Outbox of {{ .Site.Title }}",
+  "attributedTo": "{{ .Site.BaseURL }}actor.jsonld",
+  "to": "as:Public",
+  "outboxOf": "{{ .Site.BaseURL }}actor.jsonld",
+  "totalItems": {{ len $items }},
+  "orderedItems": {{ $items | jsonify }}
+}

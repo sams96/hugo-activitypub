@@ -1,0 +1,42 @@
+[params.activitypoll]
+  enable = true
+  username = "blog"
+  pollOnly = true
+  updateInterval = "P1D"
+
+[mediaTypes]
+  [mediaTypes."application/activity+json"]
+    suffixes = ["jsonld"]
+  [mediaTypes."application/jrd+json"]
+    suffixes = ["json"]
+
+[outputFormats]
+  [outputFormats.ActivityPubActor]
+    mediaType = "application/activity+json"
+    baseName = "actor"
+    isPlainText = true
+
+  [outputFormats.ActivityPubInbox]
+    mediaType = "application/activity+json"
+    baseName = "inbox"
+    isPlainText = true
+
+  [outputFormats.ActivityPubOutbox]
+    mediaType = "application/activity+json"
+    baseName = "outbox"
+    isPlainText = true
+
+  [outputFormats.WebFinger]
+    mediaType = "application/jrd+json"
+    path = ".well-known"
+    baseName = "webfinger"
+    isPlainText = true
+
+  [outputFormats.ActivityPubNote]
+    mediaType = "application/activity+json"
+    baseName = "index"
+    isPlainText = true
+
+[outputs]
+  home = ["HTML", "ActivityPubActor", "ActivityPubInbox", "ActivityPubOutbox", "WebFinger", "Headers"]
+  page = ["HTML", "ActivityPubNote"]

@@ -1,0 +1,12 @@
+{{- $username := .Site.Params.activitypoll.username | default "blog" -}}
+{{- $domain := .Site.Params.activitypoll.domain | default (urls.Parse .Site.BaseURL).Host -}}
+{
+  "subject": "acct:{{ $username }}@{{ $domain }}",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "{{ "actor.json" | absURL }}"
+    }
+  ]
+}

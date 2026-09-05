@@ -1,0 +1,10 @@
+{
+  "@context": ["https://www.w3.org/ns/activitystreams", "https://w3id.org/fep/5711"],
+  "id": "{{ .Site.BaseURL }}inbox.jsonld",
+  "type": "OrderedCollection",
+  "summary": "Inbox of {{ .Site.Title }}",
+  "attributedTo": "{{ .Site.BaseURL }}actor.jsonld",
+  "to": "as:Public",
+  "inboxOf": "{{ .Site.BaseURL }}actor.jsonld",
+  "totalItems": 0
+}
