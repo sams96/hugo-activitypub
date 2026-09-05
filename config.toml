@@ -8,7 +8,7 @@
   [mediaTypes."application/activity+json"]
     suffixes = ["jsonld"]
   [mediaTypes."application/jrd+json"]
-    suffixes = ["json"]
+    suffixes = [""]
 
 [outputFormats]
   [outputFormats.ActivityPubActor]
