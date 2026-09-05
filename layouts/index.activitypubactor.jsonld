@@ -1,3 +1,4 @@
+{{- $username := .Site.Params.activitypoll.username | default "blog" -}}
 {{ $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
 {{- $actorID := printf "%sactor.jsonld" .Site.BaseURL -}}
 {
@@ -6,8 +7,9 @@
     "https://w3id.org/fep/b06c"
   ],
   "id": "{{ $actorID }}",
-  "type": "{{ .Site.Params.activitypub.type | default "Organization" }}",
+  "type": "{{ .Site.Params.activitypub.type | default "Person" }}",
   "name": {{ .Site.Title | jsonify }},
+  "preferredUsername": "{{ $username }}",
   "summary": {{ .Site.Params.description | default .Site.Title | jsonify }},
   "pollOnly": true,
   "updateInterval": "{{ .Site.Params.activitypub.updateInterval | default "P1D" }}",
@@ -41,4 +43,11 @@
       ]
     }
   }
+  "url": {
+    "type": "Link",
+    "mediatype": "text/html",
+    "href": "{{ .Site.BaseURL }}"
+  }
+  "webfinger": "{{ $username }}@{{ (urls.Parse .Site.BaseURL).Host }}",
+  "cc": "as:Public"
 }
