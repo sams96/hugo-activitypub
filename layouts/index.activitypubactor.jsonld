@@ -4,6 +4,8 @@
 {
   "@context": [
     "https://www.w3.org/ns/activitystreams",
+    "https://purl.archive.org/miscellany/1.0",
+    "https://purl.archive.org/socialweb/webfinger",
     "https://w3id.org/fep/b06c"
   ],
   "id": "{{ $actorID }}",
@@ -14,38 +16,10 @@
   "pollOnly": true,
   "updateInterval": "{{ .Site.Params.activitypub.updateInterval | default "P1D" }}",
   "inbox": "{{ .Site.BaseURL }}inbox.jsonld",
-  "outbox": {
-    "id": "{{ .Site.BaseURL }}outbox.jsonld",
-    "totalItems": {{ len $posts }},
-    "first": {
-      "id": "{{ .Site.BaseURL }}outbox/1.jsonld",
-      "orderedItems": [
-        {{- range $index, $page := $posts -}}
-          {{- if $index -}},{{- end -}}
-          {
-            "id": "{{ $page.Permalink }}#create",
-            "type": "Create",
-            "summary": {{ printf "%s created an article" $.Site.Title | jsonify }},
-            "actor": "{{ $actorID }}",
-            "to": "as:Public",
-            "published": "{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}",
-            "object": {
-              "id": "{{ $page.Permalink }}",
-              "type": "Article",
-              "name": {{ $page.Title | jsonify }},
-              "summary": {{ $page.Summary | jsonify }},
-              "url": "{{ $page.Permalink }}",
-              "attributedTo": "{{ $actorID }}",
-              "to": "as:Public"
-            }
-          }
-        {{- end -}}
-      ]
-    }
-  },
+  "outbox": "{{ .Site.BaseURL }}outbox.jsonld",
   "url": {
     "type": "Link",
-    "mediatype": "text/html",
+    "mediaType": "text/html",
     "href": "{{ .Site.BaseURL }}"
   },
   "webfinger": "{{ $username }}@{{ (urls.Parse .Site.BaseURL).Host }}",
