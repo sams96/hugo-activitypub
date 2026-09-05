@@ -6,7 +6,7 @@
     {
       "rel": "self",
       "type": "application/activity+json",
-      "href": "{{ "actor.json" | absURL }}"
+      "href": "{{ "actor.jsonld" | absURL }}"
     }
   ]
 }
