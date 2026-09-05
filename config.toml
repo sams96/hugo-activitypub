@@ -38,5 +38,5 @@
     isPlainText = true
 
 [outputs]
-  home = ["HTML", "ActivityPubActor", "ActivityPubInbox", "ActivityPubOutbox", "WebFinger", "Headers"]
+  home = ["HTML", "ActivityPubActor", "ActivityPubInbox", "ActivityPubOutbox", "WebFinger"]
   page = ["HTML", "ActivityPubNote"]
